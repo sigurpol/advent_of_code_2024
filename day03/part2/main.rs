@@ -53,10 +53,63 @@ fn calculate_mul_sum(input: &str) -> i32 {
 }
 
 fn main() -> io::Result<()> {
-    let file_path = "day3/part2/input.txt";
+    let file_path = "day03/part2/input.txt";
     match read_file_to_string(file_path) {
         Ok(contents) => println!("Result:{}", calculate_mul_sum(&contents)),
         Err(e) => eprintln!("Error reading file: {}", e),
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_calculate_mul_sum_empty() {
+        let input = "";
+        assert_eq!(calculate_mul_sum(input), 0);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_single() {
+        let input = "mul(2,3)";
+        assert_eq!(calculate_mul_sum(input), 6);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_multiple() {
+        let input = "mul(2,3) mul(4,5)";
+        assert_eq!(calculate_mul_sum(input), 26);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_invalid() {
+        let input = "mul(2,3) mul(a,b)";
+        assert_eq!(calculate_mul_sum(input), 6);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_mixed() {
+        let input = "mul(2,3) some text mul(4,5)";
+        assert_eq!(calculate_mul_sum(input), 26);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_with_do() {
+        let input = "don't() mul(2,3) do() mul(4,5)";
+        assert_eq!(calculate_mul_sum(input), 20);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_with_dont() {
+        let input = "do() mul(2,3) don't() mul(4,5)";
+        assert_eq!(calculate_mul_sum(input), 6);
+    }
+
+    #[test]
+    fn test_calculate_mul_sum_with_do_and_dont() {
+        let input = "do() mul(2,3) don't() mul(4,5) do() mul(1,1)";
+        assert_eq!(calculate_mul_sum(input), 7);
+    }
 }

@@ -40,7 +40,7 @@ fn is_safe(v: &Vec<i32>) -> bool {
 fn main() -> io::Result<()> {
     let mut vectors: Vec<Vec<i32>> = Vec::new();
     // Open the file
-    if let Ok(file) = File::open("day2/part2/input.txt") {
+    if let Ok(file) = File::open("day02/part2/input.txt") {
         // Create a buffered reader
         let reader = io::BufReader::new(file);
 

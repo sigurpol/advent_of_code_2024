@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead};
 
@@ -8,7 +7,7 @@ fn main() -> io::Result<()> {
     let mut vector2 = Vec::new();
 
     // Open the file
-    if let Ok(file) = File::open("day1/part2/input.txt") {
+    if let Ok(file) = File::open("day01/part1/input.txt") {
         // Create a buffered reader
         let reader = io::BufReader::new(file);
 
@@ -32,19 +31,12 @@ fn main() -> io::Result<()> {
     }
 
     assert_eq!(vector1.len(), vector2.len());
-
-    // Create a HashMap to store the count of each element in vector2
-    let mut count_map = HashMap::new();
-    for &num in &vector2 {
-        *count_map.entry(num).or_insert(0) += 1;
-    }
-
+    // sort the vectors in ascending order
+    vector1.sort();
+    vector2.sort();
     let mut result = 0;
-    // Calculate the result based on the occurrences in vector2
-    for &num in &vector1 {
-        if let Some(&count) = count_map.get(&num) {
-            result += num * count;
-        }
+    for i in 0..vector1.len() {
+        result += (vector1[i] - vector2[i]).abs();
     }
     println!("The result is: {}", result);
 
